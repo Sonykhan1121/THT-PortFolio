@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:portfolio/angle_text.dart';
@@ -252,8 +254,8 @@ class _HomepageState extends State<Homepage> {
             SizedBox(height: 30,),
             TestimonialCards(testimonials: testimonials),
             SizedBox(height: 70,),
-            AngleText(),
-
+            Transform.rotate(angle: -pi/15,child:AngleText()),
+            SizedBox(height: 100,),
 
 
 
