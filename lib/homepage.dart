@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:portfolio/angle_text.dart';
 import 'package:portfolio/dashboardGrid.dart';
 import 'package:portfolio/portfolio_carousel.dart';
+import 'package:portfolio/testimonial.dart';
+import 'package:portfolio/testimonial_cards.dart';
 import 'package:portfolio/who_am_i.dart';
 import 'package:portfolio/dashboarditem.dart';
 import 'package:portfolio/why_hire_me.dart';
@@ -23,6 +26,26 @@ class _HomepageState extends State<Homepage> {
     DashBoardItem(title: "Energy Consumption Tracker", imageUrl: "assets/energy_tracker.png"),
     DashBoardItem(title: "Climate Regulation System", imageUrl: "assets/climate.png"),
     DashBoardItem(title: "Multi-Room Audio Controller", imageUrl: "assets/audio_controller.png"),
+  ];
+  final List<Testimonial> testimonials = [
+    Testimonial(
+        quote: "Your app brings so much peace and tolerance to our home.",
+        author: "Rachel, UK",
+        location: "on meditation's positive effect on family life",
+        context: "Context of the testimonial if needed"
+    ),
+    Testimonial(
+        quote: "I came to learn that the storyline in my head was holding me back.",
+        author: "Peter, Belgium",
+        location: "on what he learned when sitting with himself",
+        context: "Context of the testimonial if needed"
+    ),
+    Testimonial(
+        quote: "Headspace provides me with a connection to myself, and a disconnection from negative thoughts, feelings, and sensations.",
+        author: "Keri, UK",
+        location: "on finding her happy place",
+        context: "Context of the testimonial if needed"
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -227,6 +250,9 @@ class _HomepageState extends State<Homepage> {
             textAlign: TextAlign.center,
             ),
             SizedBox(height: 30,),
+            TestimonialCards(testimonials: testimonials),
+            SizedBox(height: 70,),
+            AngleText(),
 
 
 
