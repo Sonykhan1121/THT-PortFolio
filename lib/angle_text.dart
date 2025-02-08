@@ -18,7 +18,7 @@ class AngleText extends StatelessWidget {
     return Container(
       
       height: 50,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [Color(0xFFFF6F00), Color(0xFFB621FE), Color(0xFF1A00B6)],
           begin: Alignment.centerLeft,
