@@ -31,8 +31,8 @@ class LetsTalk extends StatelessWidget {
             },
           ),
           Positioned(
-            right:10,
-            top:8,
+            right:5,
+
             child: ElevatedButton(
               onPressed: () {
 

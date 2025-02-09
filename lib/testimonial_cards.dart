@@ -9,6 +9,7 @@ class TestimonialCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 350,
+
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
           itemCount: testimonials.length,
@@ -17,11 +18,12 @@ class TestimonialCards extends StatelessWidget {
                 width: 300,
 
                 padding: EdgeInsets.all(16),
-                margin: EdgeInsets.symmetric(horizontal: 8),
+                margin: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
+
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
@@ -31,6 +33,7 @@ class TestimonialCards extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
+
                   crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
