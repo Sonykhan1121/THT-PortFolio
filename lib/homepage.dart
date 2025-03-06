@@ -1,103 +1,94 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
+import 'package:portfolio/angle_text.dart';
+import 'package:portfolio/blogview.dart';
+import 'package:portfolio/contactview.dart';
+import 'package:portfolio/dashboardGrid.dart';
+import 'package:portfolio/homeview.dart';
+import 'package:portfolio/lets_talk.dart';
+import 'package:portfolio/portfolio_carousel.dart';
+import 'package:portfolio/portfolioview.dart';
+import 'package:portfolio/testimonial.dart';
+import 'package:portfolio/testimonial_cards.dart';
+import 'package:portfolio/who_am_i.dart';
+import 'package:portfolio/dashboarditem.dart';
+import 'package:portfolio/why_hire_me.dart';
+
+import 'footer.dart';
+
 class Homepage extends StatefulWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
 
   @override
   State<Homepage> createState() => _HomepageState();
 }
 
-class _HomepageState extends State<Homepage> {
+class _HomepageState extends State<Homepage>
+    with SingleTickerProviderStateMixin {
+  late TabController? _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _tabController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title:  Text(
-                'AppBar',
-                style: TextStyle(
-                  color: Color(0xFF7626FF),
-
-                ),
-              ),
-
-
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: ForGradientColor_boxde(Colors.white, Color(0x33FF9900),0,2),
+      appBar: AppBar(
+        title: Text(
+          'AppBar',
+          style: TextStyle(
+            color: Color(0xFF7626FF),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Container(
-              decoration: ForGradientColor_boxde(Colors.white, Color(0x33FF9900),0,2),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      textWithColor_Size(name: "Home", c1: Color(0xFFFF9D00),fSize: 16,fweight: 700),
-                      textWithColor_Size(name: "Portfolio", c1: Colors.black,fSize: 16,fweight: 400),
-                      textWithColor_Size(name: "Blog", c1: Colors.black,fSize: 16,fweight: 400),
-                      textWithColor_Size(name: "Contact", c1: Colors.black,fSize: 16,fweight: 400),
-                    ],
-                  ),
-                  SizedBox(height:40),
-                  Column(
-                    children: [
-                      textWithColor_Size(name:"Hello", c1:Colors.black,fSize:30, fweight: 400),
+        bottom: TabBar(
+          controller: _tabController,
+          labelColor: Colors.orange,
+          unselectedLabelColor: Colors.black,
+          indicatorColor: Colors.transparent,
+          indicatorWeight: 1.0,
+          tabs: [
+            Tab(text: 'Home'),
+            Tab(text: 'Portfolio'),
+            Tab(text: 'Blog'),
+            Tab(text: 'Contact'),
+          ],
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          textWithColor_Size(name:"I'm ", c1:Colors.black,fSize:30, fweight: 400),
-                          textWithColor_Size(name:"Sony khan", c1:Color(0xFFFF9D00),fSize:30, fweight: 700),
-
-
-                        ],
-                      ),
-                      ShaderMask(
-                        shaderCallback: (Rect bounds){
-                          return LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xb3afafaf),
-                              Color(0xb36f6f6f),
-                            ],
-                          ).createShader(bounds);
-                        },
-                        blendMode: BlendMode.srcATop,
-                        child: Text('Software Developer',style: TextStyle(
-
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),),
-                      ),
-
-
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(150),
-                            child:Image.asset(
-                              'assets/profile.PNG',
-
-                            width: 250,
-                            height: 250,
-                            fit: BoxFit.cover,
-                            ),
-                          ),
-
-
-                    ],
-                  ),
-                ],
-              )
-            )
-          ]),
-        ));
+        ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: Usefullmethods.ForGradientColor_boxde(
+              Color(0x405E00FB), Color(0x33FF9900), 0, 2),
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Homeview(),
+          Portfolioview(),
+          Blogview(),
+          ContactView(),
+        ],
+      ),
+    );
   }
+}
 
-  BoxDecoration ForGradientColor_boxde(Color c1, Color c2, int alignment1,int alignment2) {
+class Usefullmethods {
+  static BoxDecoration ForGradientColor_boxde(
+      Color c1, Color c2, int alignment1, int alignment2) {
     return BoxDecoration(
       gradient: LinearGradient(
         begin: get_alignment(alignment1),
@@ -106,18 +97,25 @@ class _HomepageState extends State<Homepage> {
           c1,
           c2,
         ],
-
       ),
     );
   }
 
-  Widget textWithColor_Size({double? fSize,required int fweight,required String name, required Color c1}) {
+  static Widget textWithColor_Size(
+      {double? fSize,
+      required int fweight,
+      required String name,
+      required Color c1}) {
     return Text(
       name,
-      style: TextStyle(color: c1,fontSize: fSize!=null?fSize:20,fontWeight: _getFontWeight(fweight)),
+      style: TextStyle(
+          color: c1,
+          fontSize: fSize != null ? fSize : 20,
+          fontWeight: _getFontWeight(fweight)),
     );
   }
-  FontWeight _getFontWeight(int weight) {
+
+  static FontWeight _getFontWeight(int weight) {
     switch (weight) {
       case 100:
         return FontWeight.w100;
@@ -137,7 +135,8 @@ class _HomepageState extends State<Homepage> {
         return FontWeight.w400;
     }
   }
-  Alignment get_alignment(int alignment) {
+
+  static Alignment get_alignment(int alignment) {
     switch (alignment) {
       case 0:
         return Alignment.centerLeft;
