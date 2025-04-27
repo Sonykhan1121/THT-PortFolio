@@ -1,52 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/home_tab_features/providers/home_providers.dart';
+import 'package:provider/provider.dart';
 
 class Personalinformationview extends StatelessWidget {
   const Personalinformationview({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        height: 400,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 25,),
-                  Text(
-                    "I’m Sonykhan, a Software Developer passionate about creating impactful solutions in Android Development. With 1 month of experience, I thrive on innovation, collaboration, and continuous growth. Let’s connect and build something amazing!",
-                    style:
-                    TextStyle(fontWeight:FontWeight.w400, fontSize: 16,),
-                  ),
-                  SizedBox(height: 25,),
-                  IconText(iconData: Icons.phone, text: '+880 1714133768',),
-                  IconText(iconData: Icons.email, text: 'sonykhan1121@gmail.com',),
-                  IconText(iconData: Icons.school, text: 'BSc on Computer Science & Engineering',),
-                  IconText(iconData: Icons.location_on, text: 'Uttara EPZ, Nilphamari , Bangladesh',),
-
-
-                ],
-              ),
-            ),
-            Expanded(
-                flex: 2,
+    return Consumer<HomeProviders>(builder: (BuildContext context, HomeProviders homeProvider, Widget? child) {
+      return Center(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          height: 600,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 3,
                 child: Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(150),
-                    image: DecorationImage(image: AssetImage('assets/profile.PNG'),fit: BoxFit.cover,),
+                  padding: EdgeInsets.symmetric(horizontal: 60),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 25,),
+                      Text(
+                        homeProvider.personalInfos[0].shortDescription,
+                        style:
+                        TextStyle(fontWeight:FontWeight.w500, fontSize: 18,),
+                      ),
+                      SizedBox(height: 25,),
+                      IconText(iconData: Icons.phone, text: homeProvider.personalInfos[0].phone,),
+                      IconText(iconData: Icons.email, text: homeProvider.personalInfos[0].email,),
+                      IconText(iconData: Icons.school, text: homeProvider.personalInfos[0].degree,),
+                      IconText(iconData: Icons.location_on, text: homeProvider.personalInfos[0].address,),
+
+
+                    ],
                   ),
-                ))
-          ],
+                ),
+              ),
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    height: 500,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(250),
+                      image: DecorationImage(image: NetworkImage(homeProvider.profiles[0].imageUrl),fit: BoxFit.scaleDown,),
+                    ),
+                  ))
+            ],
+          ),
         ),
-      ),
-    );;
+      );
+    },
+
+    );
   }
 }
 class IconText extends StatelessWidget {

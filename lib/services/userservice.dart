@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:portfolio/models/project_model.dart';
+import 'package:portfolio/models/workexperience.dart';
 
 import '../models/achievement.dart';
 import '../models/personal_information.dart';
 import '../models/service_model.dart';
+import '../models/skill.dart';
 import '../models/user_profile.dart'; // import your models
 // import other models similarly...
 
@@ -36,11 +39,11 @@ class DataService {
         .toList();
   }
 
-  Future<List<Map<String, dynamic>>> getAllExperiences() async {
+  Future<List<WorkExperience>> getAllExperiences() async {
     final querySnapshot = await _firestore.collection('experiences').get();
 
     return querySnapshot.docs
-        .map((doc) => {'id': doc.id, ...doc.data()})
+        .map((doc) => WorkExperience.fromMap({'id': doc.id, ...doc.data()}))
         .toList();
   }
 
@@ -54,11 +57,11 @@ class DataService {
         .toList();
   }
 
-  Future<List<Map<String, dynamic>>> getAllProjects() async {
+  Future<List<ProjectModel>> getAllProjects() async {
     final querySnapshot = await _firestore.collection('projects').get();
 
     return querySnapshot.docs
-        .map((doc) => {'id': doc.id, ...doc.data()})
+        .map((doc) => ProjectModel.fromMap({'id': doc.id, ...doc.data()}))
         .toList();
   }
 
@@ -70,11 +73,11 @@ class DataService {
         .toList();
   }
 
-  Future<List<Map<String, dynamic>>> getAllSkills() async {
+  Future<List<Skill>> getAllSkills() async {
     final querySnapshot = await _firestore.collection('skills').get();
 
     return querySnapshot.docs
-        .map((doc) => {'id': doc.id, ...doc.data()})
+        .map((doc) => Skill.fromMap({'id': doc.id, ...doc.data()}))
         .toList();
   }
 }
