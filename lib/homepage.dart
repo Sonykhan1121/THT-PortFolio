@@ -1,22 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-
-import 'package:portfolio/angle_text.dart';
 import 'package:portfolio/blogview.dart';
 import 'package:portfolio/contactview.dart';
-import 'package:portfolio/dashboardGrid.dart';
-import 'package:portfolio/homeview.dart';
-import 'package:portfolio/lets_talk.dart';
-import 'package:portfolio/portfolio_carousel.dart';
+import 'package:portfolio/home_tab_features/views/homeview.dart';
 import 'package:portfolio/portfolioview.dart';
-import 'package:portfolio/testimonial.dart';
-import 'package:portfolio/testimonial_cards.dart';
-import 'package:portfolio/who_am_i.dart';
-import 'package:portfolio/dashboarditem.dart';
-import 'package:portfolio/why_hire_me.dart';
-
-import 'footer.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({super.key});
@@ -65,7 +51,6 @@ class _HomepageState extends State<Homepage>
             Tab(text: 'Blog'),
             Tab(text: 'Contact'),
           ],
-
         ),
         centerTitle: true,
         flexibleSpace: Container(
