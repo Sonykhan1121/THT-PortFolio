@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/home_tab_features/views/showdownpage.dart';
 import 'package:portfolio/models/project_model.dart';
 
 import 'homepage.dart';
@@ -47,30 +48,39 @@ class _DashboardgridState extends State<Dashboardgrid> {
               ),
               itemCount: displayedItems.length,
               itemBuilder: (context, int index) {
-                return Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          displayedItems[index].images[0],
-                          fit: BoxFit.cover,
-                          height: 100,
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProjectShowcasePage(i: index)));
+                  },
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            displayedItems[index].images[0],
+                            fit: BoxFit.cover,
+                            height: 100,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          displayedItems[index].title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            displayedItems[index].title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
