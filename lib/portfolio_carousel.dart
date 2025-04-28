@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -13,18 +15,6 @@ class PortfolioCarousel extends StatefulWidget {
 
 class _PortfolioCarouselState extends State<PortfolioCarousel> {
   final PageController _controller = PageController();
-  final List<String> _headings = [
-    "Website UI",
-    "Mobile App",
-    "Graphic Design",
-    "Custom Software"
-  ];
-  final List<String> _images = [
-    'assets/webui.png', // Make sure these assets are added in your project
-    'assets/android.jpeg',
-    'assets/graphics.PNG',
-    'assets/custom_software.png'
-  ];
   int _currentPage = 0;
 
   @override
@@ -33,73 +23,83 @@ class _PortfolioCarouselState extends State<PortfolioCarousel> {
       builder:
           (BuildContext context, HomeProviders homeProvider, Widget? child) {
         return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           height: 400,
           // Adjust height as needed
           child: Column(
             children: [
               Expanded(
-                child: PageView.builder(
-                    controller: _controller,
-                    itemCount: homeProvider.services.length,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                    scrollbars: false,
+                    dragDevices: {
+                      PointerDeviceKind.touch,
+                      PointerDeviceKind.mouse, // Allow mouse drag
                     },
-                    itemBuilder: (_, index) {
-                      return Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              spreadRadius: 1,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 200,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: PageView.builder(
+                      controller: _controller,
+                      itemCount: homeProvider.services.length,
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      itemBuilder: (_, index) {
+                        return Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10,
+                                spreadRadius: 1,
                               ),
-                              child: ClipRRect(
+                            ],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 200,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(100),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        homeProvider.services[index].imageUrl!,
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(), // while loading
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error), // if failed
-                                    fit: BoxFit.cover, // if you want
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                homeProvider.services[index].title,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                                ),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: CachedNetworkImage(
+                                      imageUrl: homeProvider
+                                          .services[index].imageUrl!,
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(), // while loading
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error), // if failed
+                                      fit: BoxFit.cover, // if you want
+                                    )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  homeProvider.services[index].title,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              homeProvider.services[index].description,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                              Text(
+                                homeProvider.services[index].description,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                ),
               ),
               DotsIndicator(
                 dotsCount: homeProvider.services.length,

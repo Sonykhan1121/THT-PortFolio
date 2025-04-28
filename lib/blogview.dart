@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/dashboardGrid.dart';
 import 'package:portfolio/footer.dart';
+import 'package:portfolio/home_tab_features/views/dashboardgrid_blog.dart';
 import 'package:portfolio/homepage.dart';
 
 import 'dashboarditem.dart';
 
 class Blogview extends StatefulWidget {
-  const Blogview({super.key});
+  final TabController controller;
+  const Blogview({required this.controller, super.key});
 
   @override
   State<Blogview> createState() => _PortfolioviewState();
@@ -91,9 +92,11 @@ class _PortfolioviewState extends State<Blogview>
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    Dashboardgrid(items: items),
-                    SizedBox(height: 50,),
-                    Footer(),
+                    DashboardgridBlog(items: items),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Footer(widget.controller),
                   ],
                 ),
               ),

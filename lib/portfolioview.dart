@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/dashboardGrid.dart';
+import 'package:portfolio/home_tab_features/views/dashboardgrid_blog.dart';
 import 'package:portfolio/homepage.dart';
 import 'package:portfolio/lets_talk.dart';
 
@@ -7,7 +7,8 @@ import 'dashboarditem.dart';
 import 'footer.dart';
 
 class Portfolioview extends StatefulWidget {
-  const Portfolioview({super.key});
+  final TabController controller;
+  const Portfolioview({required this.controller, super.key});
 
   @override
   State<Portfolioview> createState() => _PortfolioviewState();
@@ -67,10 +68,7 @@ class _PortfolioviewState extends State<Portfolioview>
           labelColor: Colors.white,
           unselectedLabelColor: Colors.black,
           indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-
-            color: Colors.orange
-          ),
+              borderRadius: BorderRadius.circular(30), color: Colors.orange),
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorPadding: EdgeInsets.symmetric(horizontal: 20),
           tabs: [
@@ -89,16 +87,13 @@ class _PortfolioviewState extends State<Portfolioview>
           ],
         ),
         Expanded(
-
           child: TabBarView(
             controller: _tabController,
             children: [
-
-
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    Dashboardgrid(items: items),
+                    DashboardgridBlog(items: items),
                     SizedBox(height: 70),
                     Usefullmethods.textWithColor_Size(
                       fweight: 700,
@@ -122,11 +117,10 @@ class _PortfolioviewState extends State<Portfolioview>
                     SizedBox(
                       height: 100,
                     ),
-                    Footer(),
+                    Footer(widget.controller),
                   ],
                 ),
               ),
-
               Center(child: Text('Desktop App Contents')),
               Center(child: Text('Website Design Content')),
               Center(child: Text('Mobile App Content')),

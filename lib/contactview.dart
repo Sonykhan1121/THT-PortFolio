@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ContactView extends StatefulWidget {
+  final TabController controller;
+
+  ContactView({required this.controller});
+
   @override
   _ContactFormState createState() => _ContactFormState();
 }

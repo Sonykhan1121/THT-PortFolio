@@ -61,10 +61,10 @@ class _HomepageState extends State<Homepage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Homeview(),
-          Portfolioview(),
-          Blogview(),
-          ContactView(),
+          Homeview(controller: _tabController!),
+          Portfolioview(controller: _tabController!),
+          Blogview(controller: _tabController!),
+          ContactView(controller: _tabController!),
         ],
       ),
     );

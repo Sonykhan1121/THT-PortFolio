@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:portfolio/home_tab_features/providers/home_providers.dart';
 import 'package:portfolio/homepage.dart';
 import 'package:portfolio/portfolio_carousel.dart';
-import 'package:portfolio/testimonial.dart';
 import 'package:portfolio/testimonial_cards.dart';
 import 'package:portfolio/who_am_i.dart';
 import 'package:portfolio/why_hire_me.dart';
@@ -15,12 +15,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../angle_text.dart';
 import '../../dashboardGrid.dart';
-import '../../dashboarditem.dart';
 import '../../footer.dart';
 import '../../lets_talk.dart';
 
 class Homeview extends StatefulWidget {
-  const Homeview({super.key});
+  final TabController controller;
+  Homeview({required this.controller, super.key});
 
   @override
   State<Homeview> createState() => _HomeviewState();
@@ -33,10 +33,22 @@ class _HomeviewState extends State<Homeview> {
     super.initState();
   }
 
-  void downloadPdfWeb(String url, {String fileName = 'CV.pdf'}) {
-    final anchor = html.AnchorElement(href: url)
+  Future<void> downloadPdfWeb(String url, {String fileName = 'CV.pdf'}) async {
+    final response = await http.get(Uri.parse(url));
+
+    final bytes = response.bodyBytes;
+    final blob = html.Blob([bytes]);
+    final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+    final anchor = html.AnchorElement(href: blobUrl)
       ..setAttribute('download', fileName)
       ..click();
+
+    html.Url.revokeObjectUrl(blobUrl); // Clean up memory
+  }
+
+  void openPdfInNewTab(String url) {
+    html.window.open(url, '_blank');
   }
 
   Future<void> sendEmail({
@@ -68,44 +80,6 @@ class _HomeviewState extends State<Homeview> {
 
   @override
   Widget build(BuildContext context) {
-    final List<DashBoardItem> items = [
-      DashBoardItem(
-          title: "Smart Home Automation Panel",
-          imageUrl: "assets/smart_panel.png"),
-      DashBoardItem(
-          title: "Intelligent Lighting Control",
-          imageUrl: "assets/lighting_control.png"),
-      DashBoardItem(
-          title: "Advanced Security Dashboard",
-          imageUrl: "assets/advance_security.png"),
-      DashBoardItem(
-          title: "Energy Consumption Tracker",
-          imageUrl: "assets/energy_tracker.png"),
-      DashBoardItem(
-          title: "Climate Regulation System", imageUrl: "assets/climate.png"),
-      DashBoardItem(
-          title: "Multi-Room Audio Controller",
-          imageUrl: "assets/audio_controller.png"),
-    ];
-    final List<Testimonial> testimonials = [
-      Testimonial(
-          quote: "Your app brings so much peace and tolerance to our home.",
-          author: "Rachel, UK",
-          location: "on meditation's positive effect on family life",
-          context: "Context of the testimonial if needed"),
-      Testimonial(
-          quote:
-              "I came to learn that the storyline in my head was holding me back.",
-          author: "Peter, Belgium",
-          location: "on what he learned when sitting with himself",
-          context: "Context of the testimonial if needed"),
-      Testimonial(
-          quote:
-              "Headspace provides me with a connection to myself, and a disconnection from negative thoughts, feelings, and sensations.",
-          author: "Keri, UK",
-          location: "on finding her happy place",
-          context: "Context of the testimonial if needed"),
-    ];
     return Consumer<HomeProviders>(
       builder:
           (BuildContext context, HomeProviders homeProvider, Widget? child) {
@@ -292,7 +266,7 @@ Best regards,
               c1: Colors.black,
               fSize: 38,
             ),
-            Dashboardgrid(items: items),
+            Dashboardgrid(items: homeProvider.projects),
             SizedBox(
               height: 70,
             ),
@@ -325,11 +299,11 @@ Best regards,
             SizedBox(
               height: 30,
             ),
-            TestimonialCards(testimonials: testimonials),
+            TestimonialCards(testimonials: homeProvider.testimonials),
             SizedBox(
               height: 70,
             ),
-            Transform.rotate(angle: -pi / 30, child: AngleText()),
+            Transform.rotate(angle: -pi / 80, child: AngleText()),
             SizedBox(
               height: 100,
             ),
@@ -356,7 +330,7 @@ Best regards,
             SizedBox(
               height: 100,
             ),
-            Footer(),
+            Footer(widget.controller),
           ]),
         );
       },

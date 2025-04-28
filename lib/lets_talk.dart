@@ -5,16 +5,19 @@ class LetsTalk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailAddressController =
+        TextEditingController();
+
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:30),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.orange),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Stack(
-
         children: [
           TextFormField(
+            controller: emailAddressController,
             keyboardType: TextInputType.emailAddress, // For email input
             decoration: const InputDecoration(
               hintText: 'Enter your email',
@@ -31,23 +34,22 @@ class LetsTalk extends StatelessWidget {
             },
           ),
           Positioned(
-            right:5,
-
+            right: 5,
+            top: 8,
             child: ElevatedButton(
               onPressed: () {
-
+                emailAddressController.clear();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange, // Example orange color
                 foregroundColor: Colors.white,
 
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-
                 ),
               ),
-              child: const Text('Send'),
+              child: Text('Send'),
             ),
           ),
         ],
