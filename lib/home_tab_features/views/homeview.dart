@@ -60,7 +60,8 @@ class _HomeviewState extends State<Homeview> {
       scheme: 'mailto',
       path: toEmail,
       query: encodeQueryParameters(<String, String>{
-        subject: body,
+        'subject': subject,
+        'body': body,
       }),
     );
 
@@ -71,7 +72,7 @@ class _HomeviewState extends State<Homeview> {
     }
   }
 
-  String? encodeQueryParameters(Map<String, String> params) {
+  String encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((MapEntry<String, String> e) =>
             '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
